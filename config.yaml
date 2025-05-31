@@ -1,0 +1,11 @@
+# Name of the network interface to bind to
+interfaceName: "OpenVPN Data Channel Offload"
+
+# Path to dnscrypt-proxy executable
+# Note: If using backslashes (Windows-style paths), you must escape them like this:
+# Example: "C:\\Program Files\\DNSCrypt\\dnscrypt-proxy.exe"
+dnscryptExePath: "C:/Program Files/DNSCrypt/dnscrypt-proxy.exe"
+
+# Path to dnscrypt-proxy.toml configuration file
+# Same rule applies here if you prefer backslashes.
+dnscryptConfigPath: "C:/Program Files/DNSCrypt/dnscrypt-proxy.toml"
