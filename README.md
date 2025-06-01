@@ -1,6 +1,7 @@
 # autodnscrypt
 
 ![Go](https://img.shields.io/badge/Go-1.20%2B-blue)
+[![Autodnscrypt Release](https://img.shields.io/github/release/mascotmascot1/autodnscrypt.svg?label=Release&style=flat&color=red)](https://github.com/mascotmascot1/autodnscrypt/releases/latest)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 > ⚠️ **Disclaimer:** This project is not affiliated with, endorsed by, or maintained by the developers of [`dnscrypt-proxy`](https://github.com/DNSCrypt/dnscrypt-proxy).  
