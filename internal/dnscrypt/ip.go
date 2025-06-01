@@ -30,7 +30,9 @@ func GetIPv4FromInterface(ifaceName string) string {
 					ip = v.IP
 				}
 				if ipv4 := ip.To4(); ipv4 != nil {
-					return ipv4.String()
+					if !ipv4.IsLoopback() && !ipv4.IsLinkLocalUnicast() && !ipv4.IsUnspecified() {
+						return ipv4.String()
+					}
 				}
 			}
 		}
