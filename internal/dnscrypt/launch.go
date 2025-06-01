@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 )
 
 // RunProxy starts the dnscrypt-proxy executable located at the given path.
@@ -17,9 +18,9 @@ func RunProxy(exePath string) {
 	cmd.Stdin = os.Stdin
 
 	if err := cmd.Start(); err != nil {
-		log.Fatalf("Error running dnscrypt-proxy.exe: %v", err)
+		log.Fatalf("Error running %s: %v", filepath.Base(exePath), err)
 	}
-	log.Println("dnscrypt-proxy.exe started, now configuring DNS via PowerShell...")
+	log.Printf("%s started, now configuring DNS via PowerShell...", filepath.Base(exePath))
 }
 
 // SetDNS sets the DNS server address for the specified network interface

@@ -49,8 +49,6 @@ project/
 └── README.md
 ```
 
-> Note: `vendor/` is intentionally excluded and listed in `.gitignore`.
-
 ## ⚙️ Configuration
 
 The configuration is provided via `config.yaml`, which must reside in the **same directory as the built binary**.
@@ -95,6 +93,9 @@ Once `autodnscrypt` finishes updating the config and setting the DNS server, it 
 
 This is expected behavior: the utility is a one-time initializer. The `dnscrypt-proxy` process continues running independently. You won't see `autodnscrypt.exe` in Task Manager after launch — this is normal.
 
+All execution output (success or errors) is saved to `log.txt` in the **same directory as the executable**.  
+Check this file if something isn’t working as expected.
+
 ## 🧪 Verifying
 
 To view current DNS settings and verify that the changes applied correctly, you can run the following command in PowerShell:
@@ -133,12 +134,10 @@ This version runs as a regular console application — a terminal window will ap
 ### 2. 🪞 Silent build (no console window)
 
 ```bash
-go build -ldflags="-H windowsgui" -o autodnscrypt_silent.exe ./cmd/autodnscrypt
+go build -ldflags="-H windowsgui" -o autodnscrypt.exe ./cmd/autodnscrypt
 ```
 
-This builds `autodnscrypt.exe` as a `windowsgui` application, which suppresses the terminal window on launch.
-Functionality remains the same — it's just quieter for background use or scripting.
-The same `-ldflags="-H windowsgui"` option can be used when building `dnscrypt-proxy.exe` to suppress its window as well.
+This builds `autodnscrypt.exe` as a `windowsgui` application — it runs silently in the background, **without opening a terminal window**.
 
 > ⚠️ **Note:** Ensure the compiled `.exe` is in the same directory as `config.yaml`.
 
