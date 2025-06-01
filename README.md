@@ -1,8 +1,10 @@
 # autodnscrypt
 
-![Go](https://img.shields.io/badge/Go-1.20%2B-blue)
-[![Autodnscrypt Release](https://img.shields.io/github/release/mascotmascot1/autodnscrypt.svg?label=Release&style=flat&color=red)](https://github.com/mascotmascot1/autodnscrypt/releases/latest)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![Go](https://img.shields.io/badge/Go-1.20%2B-007acc?style=for-the-badge)](https://go.dev)
+[![Release](https://img.shields.io/github/release/mascotmascot1/autodnscrypt.svg?label=Release&color=007acc&style=for-the-badge)](https://github.com/mascotmascot1/autodnscrypt/releases/latest)
+[![Platform](https://img.shields.io/badge/Platform-Windows-007acc?style=for-the-badge)](https://github.com/mascotmascot1/autodnscrypt)
+[![License: MIT](https://img.shields.io/badge/License-MIT-007acc?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
 
 > ⚠️ **Disclaimer:** This project is not affiliated with, endorsed by, or maintained by the developers of [`dnscrypt-proxy`](https://github.com/DNSCrypt/dnscrypt-proxy).  
 
@@ -112,6 +114,11 @@ This will list the DNS servers configured for all interfaces, helping confirm th
 The following screenshot shows the `dnscrypt-proxy.exe` successfully starting in standalone mode (not as a Windows service). Multiple resolvers are initialized, and the local DNS listener is active:
 
 ![Proxy Startup](screenshots/dnscryptlaunch.png)
+
+> ⚠️ **Note**: This screenshot was taken from version **v1.0.0** of `autodnscrypt.exe`.  
+> In that version, the tool printed a few status messages (e.g. `Configuration file successfully updated`) directly to the console.  
+> Starting from **v1.1.0**, all such messages are logged exclusively to `log.txt`, and only `dnscrypt-proxy.exe` produces visible output in the terminal window.
+
 
 ### 🌍 DNS Leak Test — ipleak.net
 
