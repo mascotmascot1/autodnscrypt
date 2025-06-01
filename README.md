@@ -25,7 +25,7 @@ Although optimized for dynamic interfaces, the tool also supports static ones �
 
 This eliminates manual setup and ensures stable and reliable DoH (DNS over HTTPS) operation through the correct network interface.
 
-Note: This tool does not configure `dnscrypt-proxy` itself — features like DoH/TCP-only must still be enabled manually in `dnscrypt-proxy.toml`. `autodnscrypt` focuses solely on binding it to the correct interface and setting up DNS routing.
+> ⚠️ **Note:** This tool does not configure `dnscrypt-proxy` itself — features like DoH/TCP-only must still be enabled manually in `dnscrypt-proxy.toml`. `autodnscrypt` focuses solely on binding it to the correct interface and setting up DNS routing.
 
 ## 📂 Project Structure
 
@@ -153,7 +153,7 @@ This builds `autodnscrypt.exe` as a `windowsgui` application — it runs silentl
 If you build `autodnscrypt.exe` or `dnscrypt-proxy.exe` with the `-ldflags="-H windowsgui"` flag (silent mode), the process will run **without a visible console window**.  
 To stop it manually, you can use the included `killdnscrypt.bat` script.
 
-> ⚠️ The script looks for a process named `dnscrypt-proxy.exe`.  
+> ⚠️ **Note:** The script looks for a process named `dnscrypt-proxy.exe`.  
 > If your executable has a different name, open the `.bat` file in Notepad and edit it manually.
 
 ## ✅ Requirements
