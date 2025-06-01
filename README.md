@@ -104,6 +104,7 @@ To view current DNS settings and verify that the changes applied correctly, you 
 Get-DnsClientServerAddress
 ```
 ![PS Verifying](screenshots/psverifying.png)
+
 This will list the DNS servers configured for all interfaces, helping confirm that your target interface is correctly set.
 
 ### 📦 Proxy Startup Confirmation
