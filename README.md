@@ -6,8 +6,6 @@
 
 > ⚠️ **Disclaimer:** This project is not affiliated with, endorsed by, or maintained by the developers of [`dnscrypt-proxy`](https://github.com/DNSCrypt/dnscrypt-proxy).  
 
-A small utility to automatically configure `dnscrypt-proxy` to listen on the current IPv4 address of a specified network interface, set the system DNS for that interface via PowerShell, and launch `dnscrypt-proxy.exe`.
-
 > ⚠️ **Note:** This utility is designed specifically for **Windows** systems. It uses PowerShell to change DNS settings and assumes the presence of `dnscrypt-proxy` for Windows.
 
 ## 🧭 Purpose
