@@ -13,6 +13,8 @@ import (
 // by replacing the line starting with "listen_addresses" with one that contains
 // the provided IP address. Logs and exits on failure.
 func UpdateConfig(path string, ip string) {
+	const listenKey = "listen_addresses" // dnscrypt-proxy config key
+
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)
@@ -24,8 +26,8 @@ func UpdateConfig(path string, ip string) {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		if strings.HasPrefix(strings.TrimSpace(line), "listen_addresses") {
-			newLine := fmt.Sprintf("listen_addresses = ['%s:53']", ip)
+		if strings.HasPrefix(strings.TrimSpace(line), listenKey) {
+			newLine := fmt.Sprintf("%s = ['%s:53']", listenKey, ip)
 			lines = append(lines, newLine)
 		} else {
 			lines = append(lines, line)
