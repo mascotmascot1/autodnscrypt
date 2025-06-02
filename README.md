@@ -159,7 +159,7 @@ To stop it manually, you can use the included `killdnscrypt.bat` script.
 ## ✅ Requirements
 
 - Go 1.20 or newer  
-- `dnscrypt-proxy` installed (tested with version 2.1.12)  
+- `dnscrypt-proxy` installed (tested with versions 2.1.8 & 2.1.12)  
 - Windows with PowerShell available  
 - Administrator privileges to set DNS configuration
 
