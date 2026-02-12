@@ -1,3 +1,5 @@
+### 🇺🇸 [English version of this documentation](./README.en.md)
+
 # autodnscrypt
 
 [![Go](https://img.shields.io/badge/Go-1.20%2B-007acc?style=for-the-badge)](https://go.dev)
@@ -6,164 +8,169 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-007acc?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 
-> ⚠️ **Disclaimer:** This project is not affiliated with, endorsed by, or maintained by the developers of [`dnscrypt-proxy`](https://github.com/DNSCrypt/dnscrypt-proxy).  
+> ⚠️ **Отказ от ответственности:*- Этот проект не связан с разработчиками [`dnscrypt-proxy`](https://github.com/DNSCrypt/dnscrypt-proxy), не поддерживается и не одобрен ими.
 
-> ⚠️ **Note:** This utility is designed specifically for **Windows** systems. It uses PowerShell to change DNS settings and assumes the presence of `dnscrypt-proxy` for Windows.
+> ⚠️ **Примечание:*- Утилита разработана специально для систем **Windows**. Она использует PowerShell для изменения настроек DNS и предполагает наличие установленного `dnscrypt-proxy` для Windows.
 
-## 🧭 Purpose
+## 🧭 Назначение
 
-`autodnscrypt` is designed to simplify the use of `dnscrypt-proxy` on Windows systems, especially in scenarios involving VPNs or virtual network interfaces that get a new IP address on each connection.
+`autodnscrypt` создан для упрощения использования `dnscrypt-proxy` в Windows, особенно в сценариях с VPN или виртуальными сетевыми интерфейсами, которые получают новый IP-адрес при каждом подключении.
 
-In such cases, binding `dnscrypt-proxy` to `127.0.0.1` or `:53` often causes DNS resolution to break, since virtual adapters (like those used by OpenVPN) cannot access `localhost`. This tool solves that by:
+В таких случаях привязка `dnscrypt-proxy` к `127.0.0.1` или `:53` часто приводит к сбоям в работе DNS, так как виртуальные адаптеры (например, используемые OpenVPN) не могут обращаться к `localhost`. Эта утилита решает проблему следующим образом:
 
-- Automatically detecting the current IP address of the specified interface.
-- Updating the `dnscrypt-proxy.toml` config file to bind `dnscrypt-proxy` to that IP.
-- Using PowerShell to set the interface’s DNS server accordingly.
-- Launching `dnscrypt-proxy.exe`.
+- Автоматически определяет текущий IPv4-адрес указанного интерфейса.
+- Обновляет файл конфигурации `dnscrypt-proxy.toml`, привязывая `dnscrypt-proxy` именно к этому IP.
+- Использует PowerShell для установки этого IP в качестве DNS-сервера для данного интерфейса.
+- Запускает `dnscrypt-proxy.exe`.
 
-Although optimized for dynamic interfaces, the tool also supports static ones — simply provide the correct `interfaceName` in `config.yaml`.
+Хотя инструмент оптимизирован для динамических интерфейсов, он поддерживает и статические — просто укажите правильное имя интерфейса (`interfaceName`) в файле `config.yaml`.
 
-This eliminates manual setup and ensures stable and reliable DoH (DNS over HTTPS) operation through the correct network interface.
+Это исключает необходимость ручной настройки и обеспечивает стабильную работу dnscrypt, т.е. перенаправление и шифрование (к примеру DoH - DNS over HTTPS) DNS-трафика  через правильный сетевой интерфейс.
 
-> ⚠️ **Note:** This tool does not configure `dnscrypt-proxy` itself — features like DoH/TCP-only must still be enabled manually in `dnscrypt-proxy.toml`. `autodnscrypt` focuses solely on binding it to the correct interface and setting up DNS routing.
+> ⚠️ **Примечание:*- Этот инструмент не настраивает сам `dnscrypt-proxy` — такие функции, как DoH или TCP-only, должны быть включены вручную в `dnscrypt-proxy.toml`. `autodnscrypt` фокусируется исключительно на привязке к правильному интерфейсу и установке маршрутизации DNS.
 
-## 📂 Project Structure
+## 📂 Структура проекта
+
 
 ```
+
 project/
 ├── cmd/
-│   └── autodnscrypt/
-│       └── main.go # entry point
+│   └── autodnscrypt/
+│       └── main.go # точка входа
 ├── internal/
-│   └── dnscrypt/
-│       ├── config.go # loading config.yaml  
-│       ├── ip.go # retrieving IPv4 from interface          
-│       ├── update.go # updating dnscrypt-proxy.toml       
-│       └── launch.go # running executable and setting DNS 
+│   └── dnscrypt/
+│       ├── config.go # загрузка config.yaml  
+│       ├── ip.go # получение IPv4 адреса интерфейса          
+│       ├── update.go # обновление dnscrypt-proxy.toml       
+│       └── launch.go # запуск исполняемого файла и настройка DNS 
 ├── screenshots/
-│       ├── dnscryptlaunch.png
-│       └── ipleakdns.png
+│       ├── dnscryptlaunch.png
+│       └── ipleakdns.png
 ├── scripts/
-│       └── killdnscrypt.bat
+│       └── killdnscrypt.bat
 ├── config.yaml
 ├── go.mod
 ├── .gitignore
 └── README.md
+
 ```
 
-## ⚙️ Configuration
+## ⚙️ Конфигурация
 
-The configuration is provided via `config.yaml`, which must reside in the **same directory as the built binary**.
+Настройки задаются через файл `config.yaml`, который должен находиться в **той же директории, что и скомпилированный бинарный файл**.
 
-### Example `config.yaml`:
+### Пример `config.yaml`:
 
 ```yaml
 dnscryptConfigPath: "C:/Program Files/DNSCrypt/dnscrypt-proxy.toml"
 dnscryptExePath: "C:/Program Files/DNSCrypt/dnscrypt-proxy.exe"
 interfaceName: "OpenVPN Data Channel Offload"
 
-# Note: If you use backslashes (\) in Windows paths, you must escape them.
-# Example:
+# Примечание: Если вы используете обратные слеши (\) в путях Windows, их нужно экранировать.
+# Пример:
 # dnscryptExePath: "C:\\Program Files\\DNSCrypt\\dnscrypt-proxy.exe"
 ```
 
-## 🚀 What It Does
+## 🚀 Как это работает
 
 ### `autodnscrypt`:
 
-- Detects the IPv4 address of the interface named in `config.yaml`.
-- Replaces the line in `dnscrypt-proxy.toml`:
-  ```
-  listen_addresses = [':53']
-  ```
+- Определяет IPv4-адрес интерфейса, указанного в `config.yaml`.
+- Заменяет строку в `dnscrypt-proxy.toml`:
+```
+listen_addresses = [':53']
+```
 
-  with:
-  ```
-  listen_addresses = ['<IP>:53']
-  ```
+на:
+```
+listen_addresses = ['<ВАШ_IP>:53']
+```
 
-- Updates the DNS settings for the interface using PowerShell:
+- Обновляет настройки DNS для интерфейса с помощью PowerShell:
   ```powershell
   Set-DnsClientServerAddress -InterfaceAlias "<InterfaceName>" -ServerAddresses <IP>
   ```
 
-- Then launches `dnscrypt-proxy.exe`.
+- Затем запускает `dnscrypt-proxy.exe`.
 
-ℹ️ **How it runs**
+ℹ️ **Процесс выполнения**
 
-Once `autodnscrypt` finishes updating the config and setting the DNS server, it launches `dnscrypt-proxy.exe` in the background and then exits.
+После того как `autodnscrypt` завершит обновление конфига и настройку DNS, он запускает `dnscrypt-proxy.exe` в фоновом режиме и завершает свою работу.
 
-This is expected behavior: the utility is a one-time initializer. The `dnscrypt-proxy` process continues running independently. You won't see `autodnscrypt.exe` in Task Manager after launch — this is normal.
+Это нормальное поведение: утилита работает как инициализатор. Процесс `dnscrypt-proxy` продолжает работать независимо. Вы не увидите `autodnscrypt.exe` в диспетчере задач после запуска — так и должно быть.
 
-All execution output (success or errors) is saved to `log.txt` in the **same directory as the executable**.  
-Check this file if something isn’t working as expected.
+Весь вывод (сообщения об успехе или ошибках) сохраняется в файл `log.txt` в **той же директории, где находится исполняемый файл**.  
+Проверьте этот файл, если что-то работает не так, как ожидалось.
 
-## 🧪 Verifying
+## 🧪 Проверка
 
-To view current DNS settings and verify that the changes applied correctly, you can run the following command in PowerShell:
+Чтобы просмотреть текущие настройки DNS и убедиться, что изменения применились корректно, выполните следующую команду в PowerShell:
 
 ```powershell
 Get-DnsClientServerAddress
+
 ```
 ![PS Verifying](screenshots/psverifying.png)
 
-This will list the DNS servers configured for all interfaces, helping confirm that your target interface is correctly set.
+Эта команда выведет список DNS-серверов для всех интерфейсов, что поможет подтвердить правильность настройки целевого адаптера.
 
-### 📦 Proxy Startup Confirmation
+### 📦 Подтверждение запуска прокси
 
-The following screenshot shows the `dnscrypt-proxy.exe` successfully starting in standalone mode (not as a Windows service). Multiple resolvers are initialized, and the local DNS listener is active:
+На скриншоте ниже показан успешный запуск `dnscrypt-proxy.exe` в автономном режиме (не как служба Windows). Инициализировано несколько резолверов, локальный прокси DNS-сервер активен:
 
 ![Proxy Startup](screenshots/dnscryptlaunch.png)
 
-> ⚠️ **Note**: This screenshot was taken from version **v1.0.0** of `autodnscrypt.exe`.  
-> In that version, the tool printed a few status messages (e.g. `Configuration file successfully updated`) directly to the console.  
-> Starting from **v1.1.0**, all such messages are logged exclusively to `log.txt`, and only `dnscrypt-proxy.exe` produces visible output in the terminal window.
+> ⚠️ **Примечание**: Этот скриншот сделан в версии **v1.0.0*- программы `autodnscrypt.exe`.  
+> В той версии утилита выводила сообщения о статусе (например, `Configuration file successfully updated`) прямо в консоль.  
+> Начиная с версии **v1.1.0**, все подобные сообщения пишутся исключительно в `log.txt`, а в окне терминала виден только вывод самого `dnscrypt-proxy.exe`.
 
+### 🌍 Тест на утечку DNS — ipleak.net
 
-### 🌍 DNS Leak Test — ipleak.net
-
-This confirms that DNS queries are resolved through the configured secure resolvers (e.g., France, Finland, Germany), rather than your system DNS or ISP:
+Это подтверждает, что DNS-запросы разрешаются через настроенные безопасные резолверы (например, Франция, Финляндия, Германия), а не через системный DNS или провайдера:
 
 ![ipleak.net DNS Results](screenshots/ipleakdns.png)
 
-## 🛠️ Building
+## 🛠️ Сборка
 
-From the project root, you can build the executable in two ways:
+Из корневой директории проекта вы можете собрать исполняемый файл двумя способами:
 
-### 1. 🧱 Standard build (console mode)
+### 1. 🧱 Стандартная сборка (консольный режим)
 
 ```bash
 go build -o autodnscrypt.exe ./cmd/autodnscrypt
+
 ```
 
-This version runs as a regular console application — a terminal window will appear briefly when you launch it.
+Эта версия работает как обычное консольное приложение — при запуске на короткое время появится окно терминала.
 
-### 2. 🪞 Silent build (no console window)
+### 2. 🪞 Скрытая сборка (без окна консоли)
 
 ```bash
 go build -ldflags="-H windowsgui" -o autodnscrypt.exe ./cmd/autodnscrypt
+
 ```
 
-This builds `autodnscrypt.exe` as a `windowsgui` application — it runs silently in the background, **without opening a terminal window**.
+Команда собирает `autodnscrypt.exe` как приложение типа `windowsgui` — оно запускается тихо в фоновом режиме, **не открывая окна терминала**.
 
-> ⚠️ **Note:** Ensure the compiled `.exe` is in the same directory as `config.yaml`.
+> ⚠️ **Примечание:*- Убедитесь, что скомпилированный `.exe` файл находится в той же папке, что и `config.yaml`.
 
-### 🗡️ Killing a Silent Instance
+### 🗡️ Остановка скрытого процесса
 
-If you build `autodnscrypt.exe` or `dnscrypt-proxy.exe` with the `-ldflags="-H windowsgui"` flag (silent mode), the process will run **without a visible console window**.  
-To stop it manually, you can use the included `killdnscrypt.bat` script.
+Если вы собрали `autodnscrypt.exe` или запустили `dnscrypt-proxy.exe` с флагом `-ldflags="-H windowsgui"` (тихий режим), процесс будет работать **без видимого окна консоли**.  
+Чтобы остановить его вручную, вы можете использовать включенный в проект скрипт `killdnscrypt.bat`.
 
-> ⚠️ **Note:** The script looks for a process named `dnscrypt-proxy.exe`.  
-> If your executable has a different name, open the `.bat` file in Notepad and edit it manually.
+> ⚠️ **Примечание:*- Скрипт ищет процесс с именем `dnscrypt-proxy.exe`.  
+> Если ваш исполняемый файл называется иначе, откройте `.bat` файл в Блокноте и отредактируйте его вручную.
 
-## ✅ Requirements
+## ✅ Требования
 
-- Go 1.20 or newer  
-- `dnscrypt-proxy` installed (tested with versions 2.1.8 & 2.1.12)  
-- Windows with PowerShell available  
-- Administrator privileges to set DNS configuration
+- Go 1.20 или новее  
+- Установленный `dnscrypt-proxy` (протестировано на версиях 2.1.8 и 2.1.12)  
+- Windows с доступным PowerShell  
+- Права администратора для настройки конфигурации DNS
 
-## ⚠️ Notes
+## ⚠️ Важные заметки
 
-- Run the executable with administrator rights to allow PowerShell to apply DNS changes.
-- Make sure `interfaceName` exactly matches the interface name shown in `ipconfig /all`.
+- Запускайте исполняемый файл с правами администратора, чтобы PowerShell мог применить изменения DNS.
+- Убедитесь, что `interfaceName` в точности совпадает с именем интерфейса, отображаемым в команде `ipconfig /all`.
