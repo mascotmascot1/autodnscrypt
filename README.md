@@ -1,4 +1,4 @@
-### 🇺🇸 [English version of this documentation](./README.en.md)
+### 🇬🇧 [English version of this documentation](./README.en.md)
 
 # autodnscrypt
 
