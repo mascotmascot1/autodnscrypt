@@ -3,7 +3,7 @@
 # autodnscrypt
 
 [![Go](https://img.shields.io/badge/Go-1.20%2B-007acc?style=for-the-badge)](https://go.dev)
-[![Release](https://img.shields.io/github/release/mascotmascot1/autodnscrypt.svg?label=Release&color=007acc&style=for-the-badge)](https://github.com/mascotmascot1/autodnscrypt/releases/latest)
+[![Release](https://img.shields.io/github/v/tag/mascotmascot1/autodnscrypt?style=for-the-badge&logo=github&color=007acc&label=Release)](https://github.com/mascotmascot1/autodnscrypt/releases/latest)
 [![Platform](https://img.shields.io/badge/Platform-Windows-007acc?style=for-the-badge)](https://github.com/mascotmascot1/autodnscrypt)
 [![License: MIT](https://img.shields.io/badge/License-MIT-007acc?style=for-the-badge)](https://github.com/mascotmascot1/autodnscrypt/blob/main/LICENSE)
 
